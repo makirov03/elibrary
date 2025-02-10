@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-var jwtSecret = []byte("your-secret-key")
+var jwtSecret = []byte("Directorsad@12")
 
 func AuthMiddleware(allowedRoles ...string) func(http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
