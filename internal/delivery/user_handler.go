@@ -16,7 +16,6 @@ func NewUserHandler(usecase *usecase.UserUsecase) *UserHandler {
 	return &UserHandler{usecase: usecase}
 }
 
-// Register a new user
 func (h *UserHandler) RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	ctx := context.Background()
 
@@ -35,7 +34,6 @@ func (h *UserHandler) RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(map[string]string{"message": "User registered successfully"})
 }
 
-// Login user and return JWT
 func (h *UserHandler) LoginHandler(w http.ResponseWriter, r *http.Request) {
 	ctx := context.Background()
 
@@ -55,5 +53,8 @@ func (h *UserHandler) LoginHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	json.NewEncoder(w).Encode(map[string]string{"token": token})
+	err = json.NewEncoder(w).Encode(map[string]string{"token": token})
+	if err != nil {
+		return
+	}
 }

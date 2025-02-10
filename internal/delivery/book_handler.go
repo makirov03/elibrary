@@ -18,7 +18,7 @@ func NewBookHandler(usecase *usecase.BookUsecase) *BookHandler {
 }
 
 func (h *BookHandler) UploadBookHandler(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context() // ✅ Get context from request
+	ctx := r.Context()
 
 	var book models.Book
 	if err := json.NewDecoder(r.Body).Decode(&book); err != nil {
@@ -32,23 +32,29 @@ func (h *BookHandler) UploadBookHandler(w http.ResponseWriter, r *http.Request) 
 	}
 
 	w.WriteHeader(http.StatusCreated)
-	json.NewEncoder(w).Encode(map[string]string{"message": "Book uploaded successfully"})
+	err := json.NewEncoder(w).Encode(map[string]string{"message": "Book uploaded successfully"})
+	if err != nil {
+		return
+	}
 }
 
 func (h *BookHandler) GetBooksHandler(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context() // ✅ Get context from request
+	ctx := r.Context()
 
-	books, err := h.usecase.GetBooks(ctx) // ✅ Pass context
+	books, err := h.usecase.GetBooks(ctx)
 	if err != nil {
 		http.Error(w, "Failed to fetch books", http.StatusInternalServerError)
 		return
 	}
 
-	json.NewEncoder(w).Encode(books)
+	err = json.NewEncoder(w).Encode(books)
+	if err != nil {
+		return
+	}
 }
 
 func (h *BookHandler) DownloadBookHandler(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context() // ✅ Get context from request
+	ctx := r.Context()
 
 	vars := mux.Vars(r)
 	id, err := strconv.Atoi(vars["id"])
@@ -57,7 +63,7 @@ func (h *BookHandler) DownloadBookHandler(w http.ResponseWriter, r *http.Request
 		return
 	}
 
-	book, err := h.usecase.GetBookByID(ctx, id) // ✅ Pass context
+	book, err := h.usecase.GetBookByID(ctx, id)
 	if err != nil {
 		http.Error(w, "Book not found", http.StatusNotFound)
 		return

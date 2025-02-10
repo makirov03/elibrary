@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-var jwtSecret = []byte("your-secret-key") // Use the same secret key
+var jwtSecret = []byte("your-secret-key")
 
 func AuthMiddleware(allowedRoles ...string) func(http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
@@ -29,7 +29,6 @@ func AuthMiddleware(allowedRoles ...string) func(http.Handler) http.Handler {
 				return
 			}
 
-			// Check if role is allowed
 			role := claims["role"].(string)
 			for _, allowed := range allowedRoles {
 				if role == allowed {
