@@ -18,7 +18,7 @@ import (
 func main() {
 	r := mux.NewRouter()
 
-	// Initialize repositories
+	// db
 	dbConn, err := pgx.Connect(context.Background(), "postgres://atajan:atajansan@localhost:5432/postgres")
 	if err != nil {
 		log.Fatal("Unable to connect to database:", err)
@@ -26,7 +26,7 @@ func main() {
 	bookRepo := bookrepository.NewBookRepository(dbConn)
 	userRepo := userrepository.NewUserRepository(dbConn)
 
-	// Usecases
+	// Use cases
 	bookUC := bookusecase.NewBookUsecase(bookRepo)
 	userUC := userusecase.NewUserUsecase(userRepo)
 
