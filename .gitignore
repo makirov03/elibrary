@@ -1,0 +1,12 @@
+*.exe
+*.out
+*.o
+*.a
+*.so
+.DS_Store
+# Ignore IDE settings and generated files
+.idea/
+*.iml
+
+# Ignore dependencies
+vendor/
