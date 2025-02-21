@@ -26,21 +26,21 @@ func main() {
 	bookRepo := bookrepository.NewBookRepository(dbConn)
 	userRepo := userrepository.NewUserRepository(dbConn)
 
-	// Initialize use cases
+	// Usecases
 	bookUC := bookusecase.NewBookUsecase(bookRepo)
 	userUC := userusecase.NewUserUsecase(userRepo)
 
-	// Initialize handlers
+	// Handlers
 	bookHandler := bookhandlers.NewBookHandler(bookUC)
 	userHandler := userhandlers.NewUserHandler(userUC)
 
-	// Book routes
+	// Routes (gorilla/mux)
 	r.HandleFunc("/books", bookHandler.GetBooksHandler).Methods("GET")
 	r.HandleFunc("/books/{id}", bookHandler.GetBooksHandler).Methods("GET")
 	r.HandleFunc("/books", bookHandler.UploadBookHandler).Methods("POST")
 	r.HandleFunc("/books/upload", bookHandler.UploadBookHandler).Methods("POST")
 
-	// User routes
+	// Routes
 	r.HandleFunc("/users/register", userHandler.RegisterHandler).Methods("POST")
 	r.HandleFunc("/users/login", userHandler.LoginHandler).Methods("POST")
 
