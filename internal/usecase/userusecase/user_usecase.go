@@ -4,6 +4,7 @@ import (
 	"elibrary/domain/models"
 	"elibrary/internal/repository/userrepository"
 	"github.com/golang-jwt/jwt/v5"
+	_ "github.com/golang-jwt/jwt/v5"
 	"golang.org/x/crypto/bcrypt"
 	"time"
 )
